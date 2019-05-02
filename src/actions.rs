@@ -181,6 +181,7 @@ impl Action {
 
         match event {
             TestEvent::SetMergeNeeded(value) => self.0.borrow_mut().merge_needed = value,
+            TestEvent::SetSplitNeeded(value) => self.0.borrow_mut().split_needed = value,
             TestEvent::SetShortestPrefix(value) => self.0.borrow_mut().shortest_prefix = value,
             TestEvent::SetWorkUnitEnoughToRelocate(node) => {
                 set_enough_work_to_relocate(node.name())

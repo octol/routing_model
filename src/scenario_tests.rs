@@ -847,6 +847,21 @@ mod dst_tests {
     }
 
     #[test]
+    fn parsec_check_elder() {
+        run_test(
+            "Split if we detect our section needs splitting on CheckElder",
+            &initial_state_old_elders(),
+            &[
+                TestEvent::SetSplitNeeded(true).to_event(),
+                ParsecVote::CheckElder.to_event(),
+            ],
+            &AssertState {
+                action_our_events: vec![Rpc::Split.to_event()],
+            },
+        );
+    }
+
+    #[test]
     fn parsec_expect_candidate_then_online_no_elder_change() {
         let initial_state = arrange_initial_state(
             &initial_state_old_elders(),

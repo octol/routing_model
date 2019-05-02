@@ -290,6 +290,7 @@ pub enum Rpc {
     },
 
     Merge,
+    Split,
 }
 
 impl Rpc {
@@ -303,7 +304,8 @@ impl Rpc {
             | Rpc::RelocateResponse(_)
             | Rpc::RelocatedInfo(_)
             | Rpc::ExpectCandidate(_)
-            | Rpc::Merge => None,
+            | Rpc::Merge
+            | Rpc::Split => None,
 
             Rpc::NodeApproval(candidate, _)
             | Rpc::NodeConnected(candidate, _)
@@ -404,6 +406,7 @@ impl LocalEvent {
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TestEvent {
     SetMergeNeeded(bool),
+    SetSplitNeeded(bool),
     SetShortestPrefix(Option<Section>),
     SetWorkUnitEnoughToRelocate(Node),
     SetResourceProof(Name, ProofSource),

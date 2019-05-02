@@ -494,6 +494,7 @@ impl<'a> StartMergeSplitAndChangeElders<'a> {
             None => {
                 if self.split_needed() {
                     // TODO: -> Concurrent to ProcessSplit
+                    self.0.action.send_rpc(Rpc::Split);
                 } else {
                     self.start_check_elder_timeout();
                 }
