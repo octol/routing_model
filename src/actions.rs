@@ -34,6 +34,7 @@ pub struct InnerAction {
 
     pub merge_infos: Option<MergeInfo>,
     pub merge_needed: bool,
+    pub split_needed: bool,
 
     // Proving node:
     pub resource_proofs_for_elder: BTreeMap<Name, ProofSource>,
@@ -54,6 +55,7 @@ impl InnerAction {
 
             merge_infos: Default::default(),
             merge_needed: false,
+            split_needed: false,
 
             resource_proofs_for_elder: Default::default(),
         }
@@ -588,6 +590,10 @@ impl Action {
 
     pub fn merge_needed(&self) -> bool {
         self.0.borrow().merge_needed
+    }
+
+    pub fn split_needed(&self) -> bool {
+        self.0.borrow().split_needed
     }
 }
 
