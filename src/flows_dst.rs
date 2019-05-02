@@ -482,6 +482,7 @@ impl<'a> StartMergeSplitAndChangeElders<'a> {
     fn check_merge(&mut self) {
         if self.has_merge_infos() || self.merge_needed() {
             // TODO: -> Concurrent to ProcessMerge
+            self.concurrent_transition_to_process_merge();
             self.0.action.send_rpc(Rpc::Merge);
         } else {
             self.check_elder()
@@ -499,6 +500,10 @@ impl<'a> StartMergeSplitAndChangeElders<'a> {
                 }
             }
         }
+    }
+
+    fn concurrent_transition_to_process_merge(&mut self) {
+        self.0.as_process_merge().start_event_loop()
     }
 
     fn concurrent_transition_to_process_elder_change(&mut self, change_elder: ChangeElder) {
@@ -596,6 +601,13 @@ impl<'a> ProcessElderChange<'a> {
         let change_elder = unwrap!(self.mut_routine_state().change_elder.take());
         self.0.action.mark_elder_change(change_elder);
     }
+}
+
+#[derive(Debug, PartialEq)]
+pub struct ProcessMerge<'a>(pub &'a mut MemberState);
+
+impl<'a> ProcessMerge<'a> {
+    pub fn start_event_loop(&mut self) {}
 }
 
 #[derive(Debug, PartialEq)]

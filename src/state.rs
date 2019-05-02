@@ -155,6 +155,10 @@ impl MemberState {
         StartRelocateSrc(self)
     }
 
+    pub fn as_process_merge(&mut self) -> ProcessMerge {
+        ProcessMerge(self)
+    }
+
     pub fn as_process_elder_change(&mut self) -> ProcessElderChange {
         ProcessElderChange(self)
     }
